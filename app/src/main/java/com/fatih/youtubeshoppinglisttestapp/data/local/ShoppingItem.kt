@@ -5,10 +5,10 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class ShoppingItem(
-    private val name:String,
-    private val amount:Int,
-    private val price:Int,
-    private val imageUrl:String,
+    val name:String,
+    val amount:Int,
+    val price:Int,
+    val imageUrl:String,
     @PrimaryKey(autoGenerate = true)
-    private val id:Int?=null
+    val id:Int?=null
 )

@@ -17,4 +17,5 @@ interface ShoppingDao {
 
     @Query("SELECT SUM(price*amount) FROM ShoppingItem")
     fun getTotalPrice():LiveData<Float>
+
 }
