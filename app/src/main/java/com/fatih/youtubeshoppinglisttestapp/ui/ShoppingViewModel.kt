@@ -10,6 +10,7 @@ import com.fatih.youtubeshoppinglisttestapp.data.remote.ImageResponse
 import com.fatih.youtubeshoppinglisttestapp.other.Constants
 import com.fatih.youtubeshoppinglisttestapp.other.Event
 import com.fatih.youtubeshoppinglisttestapp.other.Resource
+import com.fatih.youtubeshoppinglisttestapp.other.Status
 import com.fatih.youtubeshoppinglisttestapp.repository.ShoppingRepositoryInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -73,16 +74,20 @@ class ShoppingViewModel @Inject constructor(private val repository: ShoppingRepo
         _insertShoppingItemStatus.postValue(Event(Resource.success(shoppingItem)))
     }
 
-    fun searchForImage(query: String){
+    fun searchForImage(query: String)=viewModelScope.launch{
+        println("girdi")
+        _images.value= Event(Resource.loading(null))
 
         if(query.isEmpty()){
-            return
+            return@launch
         }
-        _images.value= Event(Resource.loading(null))
-        viewModelScope.launch {
-            val response=repository.getImagesFromApi(query)
-            _images.value=Event(response)
-        }
+        val response=repository.getImagesFromApi(query)
+        println("images value"+_images.value?.peekContent()?.status)
+        println(response.status)
+        _images.value=Event(response)
+        println("images value"+_images.value?.peekContent()?.status)
+
+
     }
 
 }

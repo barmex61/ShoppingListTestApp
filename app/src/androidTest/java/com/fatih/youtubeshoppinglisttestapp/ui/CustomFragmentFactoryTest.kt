@@ -16,8 +16,7 @@ class CustomFragmentFactoryTest @Inject constructor(private val shoppingItemAdap
         return when(className){
             ImagePickFragment::class.java.name->ImagePickFragment(
                 ShoppingViewModel(FakeShoppingRepository()),
-                imageAdapter
-            )
+                imageAdapter)
             AddShoppingItemFragment::class.java.name->AddShoppingItemFragment(glide)
             ShoppingFragment::class.java.name->ShoppingFragment(
                 shoppingItemAdapter,

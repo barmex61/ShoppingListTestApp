@@ -50,6 +50,7 @@ class ShoppingRepository @Inject constructor(private val shoppingDao: ShoppingDa
             val result=pixabayApi.getImagesFromApi(query = query)
             if(result.isSuccessful){
                 result.body()?.let {
+                    println(it.hits)
                     Resource.success(it)
                 }?: Resource.error(null,"Body Null")
             }else{

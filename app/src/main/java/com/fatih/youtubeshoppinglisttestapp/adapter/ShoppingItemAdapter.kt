@@ -51,10 +51,10 @@ class ShoppingItemAdapter @Inject constructor(private val glide:RequestManager):
 
     override fun onBindViewHolder(holder: ShoppingItemViewHolder, position: Int) {
         glide.load(shoppingItemList[position].imageUrl).into(holder.binding.ivShoppingImage)
+        holder.binding.tvShoppingItemPrice.text=shoppingItemList[position].price.toString()
+        holder.binding.tvShoppingItemAmount.text=shoppingItemList[position].amount.toString()
+        holder.binding.tvName.text=shoppingItemList[position].name
         holder.itemView.setOnClickListener {
-            holder.binding.tvShoppingItemPrice.text=shoppingItemList[position].price.toString()
-            holder.binding.tvShoppingItemAmount.text=shoppingItemList[position].amount.toString()
-            holder.binding.tvName.text=shoppingItemList[position].name.toString()
             myItemLambda?.let {
                 it(shoppingItemList[position])
             }

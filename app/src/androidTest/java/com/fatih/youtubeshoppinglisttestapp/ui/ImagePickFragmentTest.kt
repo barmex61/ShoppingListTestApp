@@ -71,13 +71,13 @@ class ImagePickFragmentTest{
     fun testIfSearchStringIsNotEmptyAndShouldShowNetworkErrorFalse_returnStatusSuccess()=
         runBlocking{
         var testViewModel:ShoppingViewModel?=null
-        FakeShoppingRepository.shouldReturnNetworkError=false
         launchFragmentInHiltContainer<ImagePickFragment>(fragmentFactory = fragmentFactory){
             testViewModel=this.viewModel
         }
-        Espresso.onView(ViewMatchers.withId(R.id.etSearch)).perform(ViewActions.replaceText("Elma"))
-        val result=testViewModel?.images?.getOrAwaitValue()
-        val data=result?.getContentIfNotHandled()
-        assertThat(data?.status).isEqualTo(com.fatih.youtubeshoppinglisttestapp.other.Status.SUCCESS)
+        Espresso.onView(ViewMatchers.withId(R.id.etSearch)).perform(ViewActions.replaceText("Elm"))
+        val result=testViewModel?.images?.getOrAwaitValue()?.peekContent()?.status
+        assertThat(result).isEqualTo(com.fatih.youtubeshoppinglisttestapp.other.Status.LOADING)
+        val result2=testViewModel?.images?.getOrAwaitValue()?.peekContent()?.status
+        assertThat(result2).isEqualTo(com.fatih.youtubeshoppinglisttestapp.other.Status.SUCCESS)
     }
 }

@@ -30,7 +30,7 @@ class ImagePickFragment @Inject constructor(var viewModel: ShoppingViewModel?=nu
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding= FragmentImagePickBinding.bind(view)
-        viewModel=viewModel?: ViewModelProvider(requireActivity())[ShoppingViewModel::class.java]
+        viewModel=viewModel?:ViewModelProvider(requireActivity())[ShoppingViewModel::class.java]
         setupRecyclerView()
         subscribeToObservers()
 
@@ -43,6 +43,7 @@ class ImagePickFragment @Inject constructor(var viewModel: ShoppingViewModel?=nu
                     try {
                         val query=it.toString()
                         if(query.isNotEmpty())
+                            println("içerde")
                         viewModel?.searchForImage(query)
 
                     }catch (e:Exception){
@@ -63,11 +64,13 @@ class ImagePickFragment @Inject constructor(var viewModel: ShoppingViewModel?=nu
             it?.getContentIfNotHandled()?.let { result ->
                 when(result.status) {
                     Status.SUCCESS -> {
-                        val urls = result.data?.imageResults?.map { imageResult ->  imageResult.previewURL }
+                        println("success")
+                        val urls = result.data?.hits?.map { imageResult ->  imageResult.previewURL }
                         imageAdapter.imageUrlList = urls ?: listOf()
                         binding.progressBar.visibility = View.GONE
                     }
                     Status.ERROR -> {
+                        println("error")
                         Snackbar.make(
                             requireView(),
                             result.message ?: "An unknown error occured.",
