@@ -17,8 +17,10 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
+        //testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.fatih.youtubeshoppinglisttestapp.HiltTestRunner"
         buildConfigField("String","API_KEY",API_KEY)
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -33,6 +35,10 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    buildFeatures{
+        viewBinding true
     }
 }
 
@@ -120,4 +126,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     androidTestImplementation "org.mockito:mockito-core:4.7.0"
+
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.43.2'
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.44'
+
+    debugImplementation 'androidx.fragment:fragment-testing:1.5.5'
 }
