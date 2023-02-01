@@ -75,17 +75,13 @@ class ShoppingViewModel @Inject constructor(private val repository: ShoppingRepo
     }
 
     fun searchForImage(query: String)=viewModelScope.launch{
-        println("girdi")
         _images.value= Event(Resource.loading(null))
 
         if(query.isEmpty()){
             return@launch
         }
         val response=repository.getImagesFromApi(query)
-        println("images value"+_images.value?.peekContent()?.status)
-        println(response.status)
         _images.value=Event(response)
-        println("images value"+_images.value?.peekContent()?.status)
 
 
     }

@@ -43,7 +43,6 @@ class ImagePickFragment @Inject constructor(var viewModel: ShoppingViewModel?=nu
                     try {
                         val query=it.toString()
                         if(query.isNotEmpty())
-                            println("içerde")
                         viewModel?.searchForImage(query)
 
                     }catch (e:Exception){
