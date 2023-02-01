@@ -21,8 +21,10 @@ import android.os.Bundle
 import androidx.annotation.StyleRes
 import androidx.core.util.Preconditions
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentFactory
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
+import com.fatih.youtubeshoppinglisttestapp.ui.CustomFragmentFactory
 
 /**
  * launchFragmentInContainer from the androidx.fragment:fragment-testing library
@@ -35,6 +37,7 @@ import androidx.test.core.app.ApplicationProvider
  */
 inline fun <reified T : Fragment> launchFragmentInHiltContainer(
     fragmentArgs: Bundle? = null,
+    fragmentFactory: FragmentFactory,
     @StyleRes themeResId: Int = androidx.fragment.testing.R.style.FragmentScenarioEmptyFragmentActivityTheme,
     crossinline action: T.() -> Unit = {}
 ) {
@@ -49,6 +52,7 @@ inline fun <reified T : Fragment> launchFragmentInHiltContainer(
     )
 
     ActivityScenario.launch<HiltTestActivity>(startActivityIntent).onActivity { activity ->
+        activity.supportFragmentManager.fragmentFactory=fragmentFactory
         val fragment: Fragment = activity.supportFragmentManager.fragmentFactory.instantiate(
             Preconditions.checkNotNull(T::class.java.classLoader),
             T::class.java.name

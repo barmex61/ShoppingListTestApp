@@ -11,7 +11,9 @@ class FakeShoppingRepository :ShoppingRepositoryInterface {
     private val shoppingList= mutableListOf<ShoppingItem>()
     val shoppingListLiveData=MutableLiveData<List<ShoppingItem>>(shoppingList)
     val totalPriceLiveData=MutableLiveData<Float>()
-    private var shouldReturnNetworkError=false
+    companion object{
+        var shouldReturnNetworkError=false
+    }
     fun setShouldReturnNetworkError(value:Boolean){
         shouldReturnNetworkError=value
     }

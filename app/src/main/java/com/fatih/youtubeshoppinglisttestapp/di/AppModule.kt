@@ -2,6 +2,9 @@ package com.fatih.youtubeshoppinglisttestapp.di
 
 import android.content.Context
 import androidx.room.Room
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.fatih.youtubeshoppinglisttestapp.R
 import com.fatih.youtubeshoppinglisttestapp.data.local.ShoppingDao
 import com.fatih.youtubeshoppinglisttestapp.data.local.ShoppingDatabase
 import com.fatih.youtubeshoppinglisttestapp.data.remote.PixabayApi
@@ -36,5 +39,12 @@ object AppModule {
     @Provides
     @Singleton
     fun provideShoppingRepository(shoppingDao: ShoppingDao,api:PixabayApi)=ShoppingRepository(shoppingDao,api) as ShoppingRepositoryInterface
+
+    @Provides
+    @Singleton
+    fun provideGlide(@ApplicationContext context: Context)=Glide.with(context).setDefaultRequestOptions(
+        RequestOptions().placeholder(R.drawable.ic_image).error(R.drawable.ic_image)
+    )
+
 
 }
