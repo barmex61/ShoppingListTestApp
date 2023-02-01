@@ -2,9 +2,13 @@ package com.fatih.youtubeshoppinglisttestapp.di
 
 import android.content.Context
 import androidx.room.Room
+import com.fatih.youtubeshoppinglisttestapp.data.local.ShoppingDao
 import com.fatih.youtubeshoppinglisttestapp.data.local.ShoppingDatabase
+import com.fatih.youtubeshoppinglisttestapp.data.remote.PixabayApi
 import com.fatih.youtubeshoppinglisttestapp.other.Constants.BASE_URL
 import com.fatih.youtubeshoppinglisttestapp.other.Constants.DATABASE_NAME
+import com.fatih.youtubeshoppinglisttestapp.repository.ShoppingRepository
+import com.fatih.youtubeshoppinglisttestapp.repository.ShoppingRepositoryInterface
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,5 +31,10 @@ object AppModule {
     @Singleton
     @Provides
     fun providePixabayApi()=Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create())
-        .build()
+        .build().create(PixabayApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideShoppingRepository(shoppingDao: ShoppingDao,api:PixabayApi)=ShoppingRepository(shoppingDao,api) as ShoppingRepositoryInterface
+
 }
